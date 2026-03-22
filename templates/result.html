@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Результат — ConvertHub{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="breadcrumbs">
+        <a href="/">Главная</a>
+        <span class="breadcrumbs__sep">/</span>
+        <a href="/convert/image">Изображения</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Результат</span>
+    </div>
+    <h1 class="page-header__title">Конвертация <span class="accent">завершена</span></h1>
+</section>
+
+<div class="result-card result-card--standalone">
+    <img src="{{ download_url }}" class="result-card__img" alt="Converted image">
+    <div class="result-card__stats">
+        <div class="stat">
+            <span class="stat__label">Оригинал</span>
+            <span class="stat__value">{{ original_size }}</span>
+        </div>
+        <div class="stat">
+            <span class="stat__label">Результат</span>
+            <span class="stat__value">{{ converted_size }}</span>
+        </div>
+    </div>
+    <a href="{{ download_url }}" class="btn btn--primary btn--lg" download>Скачать</a>
+    <a href="/convert/image" class="btn btn--outline">Конвертировать ещё</a>
+</div>
+{% endblock %}

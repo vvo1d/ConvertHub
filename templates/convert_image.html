@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Конвертация изображений — ConvertHub{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="breadcrumbs">
+        <a href="/">Главная</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Изображения</span>
+    </div>
+    <h1 class="page-header__title">Конвертация <span class="accent">изображений</span></h1>
+    <p class="page-header__desc">Загрузите до 10 изображений и выберите формат для конвертации</p>
+</section>
+
+<div class="converter">
+    <!-- Upload area -->
+    <div class="upload-zone" id="upload-zone">
+        <div class="upload-zone__content">
+            <svg class="upload-zone__icon" width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <path d="M32 44V20M32 20l-10 10M32 20l10 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 40v6a6 6 0 006 6h28a6 6 0 006-6v-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <p class="upload-zone__text">Перетащите изображения сюда</p>
+            <p class="upload-zone__hint">или</p>
+            <label class="btn btn--outline upload-zone__btn">
+                Выбрать файлы
+                <input type="file" id="file-input" accept="image/*" multiple hidden>
+            </label>
+            <p class="upload-zone__formats">PNG, JPG, GIF, BMP, TIFF, WebP, ICO, SVG — до 50 МБ, макс. 10 файлов</p>
+        </div>
+    </div>
+
+    <!-- File list -->
+    <div class="file-list-section hidden" id="file-list-section">
+        <div class="file-list-header">
+            <span class="file-list-header__count" id="file-count"></span>
+            <button class="btn btn--ghost btn--sm" id="clear-all">Очистить все</button>
+        </div>
+        <div class="file-list" id="file-list"></div>
+        <div class="file-list-add">
+            <label class="btn btn--outline btn--sm">
+                + Добавить ещё
+                <input type="file" id="file-input-more" accept="image/*" multiple hidden>
+            </label>
+        </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings hidden" id="settings-section">
+        <div class="settings__row">
+            <div class="form-group">
+                <label for="format-select" class="form-label">Конвертировать в:</label>
+                <select id="format-select" class="form-select">
+                    <option value="WEBP">WebP</option>
+                    <option value="PNG">PNG</option>
+                    <option value="JPEG">JPEG</option>
+                    <option value="BMP">BMP</option>
+                    <option value="TIFF">TIFF</option>
+                    <option value="ICO">ICO</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Advanced settings -->
+        <details class="advanced-settings">
+            <summary class="advanced-settings__toggle">Дополнительные настройки</summary>
+            <div class="advanced-settings__body">
+                <div class="form-group" id="quality-group">
+                    <label for="quality-range" class="form-label">
+                        Качество: <span id="quality-value">85</span>%
+                    </label>
+                    <input type="range" id="quality-range" class="form-range" min="1" max="100" value="85">
+                </div>
+            </div>
+        </details>
+
+        <button class="btn btn--primary btn--lg" id="convert-btn" disabled>Конвертировать</button>
+    </div>
+
+    <!-- Result -->
+    <div class="result-section hidden" id="result-section">
+        <h2 class="result-section__title">Готово!</h2>
+        <div class="result-list" id="result-list"></div>
+        <div class="result-actions">
+            <button class="btn btn--primary btn--lg" id="download-all-btn">Скачать все (ZIP)</button>
+            <button class="btn btn--outline" id="convert-another">Конвертировать ещё</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
