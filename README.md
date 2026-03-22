@@ -1,28 +1,64 @@
 # ConvertHub
 
-Универсальный веб-конвертер файлов на Flask. Поддерживает конвертацию изображений между форматами PNG, JPG, WebP, BMP, TIFF, ICO.
+Универсальный веб-конвертер файлов на Flask. Поддерживает конвертацию изображений и документов.
 
 ## Возможности
 
-- Конвертация изображений (PNG, JPG, GIF, BMP, TIFF, WebP, ICO)
+### Изображения
+- Конвертация между PNG, JPG, GIF, BMP, TIFF, WebP, ICO
 - Пакетная обработка до 10 файлов одновременно
 - Drag-and-drop / вставка из буфера (Ctrl+V)
-- Настройка качества для JPEG/WebP
+- Настройка качества и размера
 - Скачивание результатов по одному или ZIP-архивом
+
+### Документы
+- PDF → DOCX (прямая конвертация)
+- PDF → DOCX через OCR (для сканированных документов)
+- PDF → Изображения (PNG/JPEG, настраиваемый DPI)
+- PDF → Текст через OCR (распознавание)
+- DOCX → PDF
+- Markdown → PDF / HTML
+- HTML → PDF
+- TXT → PDF
+- Изображения → PDF (объединение нескольких файлов)
+
+### Общее
 - Автоочистка файлов старше 1 часа
 - Валидация MIME-типов через libmagic
+- Полная поддержка кириллицы в PDF (шрифты DejaVu Sans)
+
+## Системные зависимости
+
+### macOS
+
+```bash
+brew install libmagic tesseract tesseract-lang
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo apt update
+sudo apt install -y libmagic1 tesseract-ocr tesseract-ocr-rus
+```
+
+`tesseract-ocr-rus` — языковой пакет для распознавания русского текста. Для других языков установите соответствующий пакет `tesseract-ocr-<lang>` (список: `apt search tesseract-ocr-`).
+
+### Fedora / RHEL / CentOS
+
+```bash
+sudo dnf install file-libs tesseract tesseract-langpack-rus
+```
+
+### Arch Linux
+
+```bash
+sudo pacman -S file tesseract tesseract-data-rus
+```
 
 ## Запуск
 
 ```bash
-# Зависимости
-
-# macOS:
-brew install libmagic
-
-# Ubuntu/Debian:
-sudo apt install libmagic1
-
 # Виртуальное окружение
 python3 -m venv venv
 source venv/bin/activate
@@ -37,17 +73,19 @@ flask run
 ## Структура
 
 ```
-├── app.py                 # Flask-приложение
-├── config.py              # Конфигурация
-├── requirements.txt       # Зависимости
+├── app.py                      # Flask-приложение
+├── config.py                   # Конфигурация
+├── requirements.txt            # Python-зависимости
 ├── converters/
-│   ├── image_converter.py # Конвертация изображений (Pillow)
-│   └── document_converter.py # Заглушка
-├── templates/             # Jinja2-шаблоны
+│   ├── image_converter.py      # Конвертация изображений (Pillow)
+│   └── document_converter.py   # Конвертация документов (reportlab, pdf2docx, pytesseract)
+├── templates/                  # Jinja2-шаблоны
 ├── static/
-│   ├── css/style.css      # Стили (тёмная тема)
-│   └── js/main.js         # Фронтенд-логика
-└── uploads/               # Временные файлы
+│   ├── css/style.css           # Стили (тёмная тема)
+│   ├── js/main.js              # Фронтенд — изображения
+│   ├── js/document.js          # Фронтенд — документы
+│   └── fonts/                  # DejaVu Sans (кириллица в PDF)
+└── uploads/                    # Временные файлы
 ```
 
 ## Деплой на сервер (Ubuntu/Debian)
@@ -55,7 +93,9 @@ flask run
 ### 1. Подготовка сервера
 
 ```bash
-sudo apt update && sudo apt install -y python3 python3-venv python3-pip libmagic1 nginx
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip \
+    libmagic1 tesseract-ocr tesseract-ocr-rus nginx
 ```
 
 ### 2. Клонирование и настройка
@@ -155,6 +195,8 @@ sudo certbot --nginx -d example.com
 
 ### 7. Автоочистка uploads (cron)
 
+Приложение автоматически удаляет файлы старше 1 часа. Дополнительно можно настроить cron:
+
 ```bash
 sudo crontab -u www-data -e
 ```
@@ -165,5 +207,5 @@ sudo crontab -u www-data -e
 
 ## Технологии
 
-- **Backend:** Flask, Pillow, python-magic
-- **Frontend:** Vanilla JS, CSS (JetBrains Mono + Manrope)
+- **Backend:** Flask, Pillow, reportlab, pdf2docx, PyMuPDF, python-docx, pytesseract, python-magic
+- **Frontend:** Vanilla JS, CSS (тёмная тема)
