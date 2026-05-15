@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Обрезка изображения — ConvertHub{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/crop.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="breadcrumbs">
+        <a href="/">Главная</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span>Обрезка</span>
+    </div>
+    <h1 class="page-header__title">Обрезка <span class="accent">изображения</span></h1>
+    <p class="page-header__desc">Загрузите изображение, выделите нужную область и скачайте результат</p>
+</section>
+
+<!-- Upload zone -->
+<div id="upload-area">
+    <label class="upload-drop-area" id="drop-area">
+        <input type="file" id="file-input" accept="image/*">
+        <svg class="upload-drop-area__icon" width="52" height="52" viewBox="0 0 52 52" fill="none">
+            <path d="M26 36V18M26 18l-9 9M26 18l9 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 40v3a4 4 0 004 4h28a4 4 0 004-4v-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <p class="upload-drop-area__text">Перетащите изображение или нажмите для выбора</p>
+        <p class="upload-drop-area__hint">PNG, JPG, WebP, GIF, BMP, TIFF, ICO — до 50 МБ</p>
+    </label>
+</div>
+
+<!-- Crop editor -->
+<div id="editor-area" class="hidden">
+    <div class="crop-layout">
+        <div>
+            <div class="crop-canvas-wrap">
+                <img id="crop-image" src="" alt="Изображение для обрезки">
+            </div>
+        </div>
+
+        <div class="crop-sidebar">
+
+            <div class="crop-panel">
+                <p class="crop-panel__title">Соотношение сторон</p>
+                <div class="ratio-grid">
+                    <button class="ratio-btn" data-ratio="NaN">Свободно</button>
+                    <button class="ratio-btn" data-ratio="1">1 : 1</button>
+                    <button class="ratio-btn" data-ratio="1.7778">16 : 9</button>
+                    <button class="ratio-btn" data-ratio="1.3333">4 : 3</button>
+                    <button class="ratio-btn" data-ratio="1.5">3 : 2</button>
+                    <button class="ratio-btn" data-ratio="0.5625">9 : 16</button>
+                </div>
+            </div>
+
+            <div class="crop-panel">
+                <p class="crop-panel__title">Область обрезки</p>
+                <div class="crop-info">
+                    <div class="crop-info-item">
+                        <span class="crop-info-item__label">Ширина</span>
+                        <span class="crop-info-item__value" id="info-w">—</span>
+                    </div>
+                    <div class="crop-info-item">
+                        <span class="crop-info-item__label">Высота</span>
+                        <span class="crop-info-item__value" id="info-h">—</span>
+                    </div>
+                    <div class="crop-info-item">
+                        <span class="crop-info-item__label">X</span>
+                        <span class="crop-info-item__value" id="info-x">—</span>
+                    </div>
+                    <div class="crop-info-item">
+                        <span class="crop-info-item__label">Y</span>
+                        <span class="crop-info-item__value" id="info-y">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="crop-panel">
+                <p class="crop-panel__title">Инструменты</p>
+                <div class="crop-tools">
+                    <div class="crop-tool-row">
+                        <button class="crop-tool-btn" id="rotate-left">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 106-6H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 4v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            −90°
+                        </button>
+                        <button class="crop-tool-btn" id="rotate-right">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8a6 6 0 11-6-6h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 4v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            +90°
+                        </button>
+                    </div>
+                    <div class="crop-tool-row">
+                        <button class="crop-tool-btn" id="flip-h">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M4 5l-3 3 3 3M12 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Зеркало H
+                        </button>
+                        <button class="crop-tool-btn" id="flip-v">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M5 4l3-3 3 3M5 12l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Зеркало V
+                        </button>
+                    </div>
+                    <button class="crop-tool-btn" id="reset-btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 106-6H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 4v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Сбросить
+                    </button>
+                </div>
+            </div>
+
+            <div class="crop-panel">
+                <p class="crop-panel__title">Сохранить</p>
+                <div class="format-select-row">
+                    <select id="output-format" class="form-select" style="max-width:100%">
+                        <option value="image/png">PNG</option>
+                        <option value="image/jpeg">JPEG</option>
+                        <option value="image/webp">WebP</option>
+                    </select>
+                    <button class="btn btn--primary crop-download-btn" id="download-btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Скачать обрезанное
+                    </button>
+                    <button class="btn btn--outline" id="change-image-btn" style="width:100%;justify-content:center">
+                        Загрузить другое
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+<script src="{{ url_for('static', filename='js/crop.js') }}"></script>
+{% endblock %}

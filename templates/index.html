@@ -5,26 +5,125 @@
 {% block content %}
 <section class="hero">
     <h1 class="hero__title">Convert<span class="accent">Hub</span></h1>
-    <p class="hero__subtitle">Конвертируйте изображения — быстро, бесплатно, без регистрации</p>
+    <p class="hero__subtitle">Конвертируйте и редактируйте изображения — быстро, бесплатно, без регистрации</p>
+    <div class="hero__actions">
+        <a href="/convert/image" class="btn btn--primary btn--lg">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="7" cy="9" r="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M2 13l4-3 3 2.5 4-5 5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Конвертировать изображения
+        </a>
+        <a href="/convert/crop" class="btn btn--outline btn--lg">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 1v14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M1 5h14v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
+            </svg>
+            Обрезать изображение
+        </a>
+    </div>
+</section>
+
+<section class="formats-section">
+    <p class="formats-section__label">Поддерживаемые форматы</p>
+    <div class="formats-badges">
+        <span class="format-badge">PNG</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">JPG</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">WebP</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">BMP</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">TIFF</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">ICO</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">GIF</span>
+        <span class="format-sep">·</span>
+        <span class="format-badge">SVG</span>
+    </div>
+    <div class="conversions-grid">
+        <div class="conversion-item">
+            <span class="conversion-from">PNG</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">WebP</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">JPG</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">PNG</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">WebP</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">JPEG</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">BMP</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">PNG</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">GIF</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">WebP</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">PNG</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">ICO</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">JPG</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">BMP</span>
+        </div>
+        <div class="conversion-item">
+            <span class="conversion-from">TIFF</span>
+            <span class="conversion-arrow">→</span>
+            <span class="conversion-to">JPEG</span>
+        </div>
+    </div>
 </section>
 
 <section class="categories">
     <div class="cards-grid">
         <a href="/convert/image" class="card card--active" style="--delay: 0">
             <div class="card__icon">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
                     <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
                     <circle cx="18" cy="22" r="4" stroke="currentColor" stroke-width="2"/>
                     <path d="M6 32l10-8 6 5 8-10 12 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
-            <h3 class="card__title">Изображения</h3>
-            <p class="card__desc">PNG, JPG, WebP, BMP, TIFF, ICO, GIF</p>
+            <h3 class="card__title">Конвертер</h3>
+            <p class="card__desc">Конвертируйте до 10 изображений за раз в нужный формат</p>
             <div class="card__conversions">
                 <span class="tag">PNG → WebP</span>
                 <span class="tag">JPG → PNG</span>
                 <span class="tag">BMP → JPEG</span>
                 <span class="tag">+ ещё</span>
+            </div>
+        </a>
+
+        <a href="/convert/crop" class="card card--active" style="--delay: 1">
+            <div class="card__icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <path d="M10 4v32h32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M4 10h32v32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <rect x="10" y="10" width="22" height="22" rx="2" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/>
+                </svg>
+            </div>
+            <h3 class="card__title">Обрезка</h3>
+            <p class="card__desc">Обрежьте и сохраните нужную часть изображения</p>
+            <div class="card__conversions">
+                <span class="tag">Свободный выбор</span>
+                <span class="tag">1:1</span>
+                <span class="tag">16:9</span>
+                <span class="tag">4:3</span>
             </div>
         </a>
     </div>

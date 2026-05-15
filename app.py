@@ -122,6 +122,12 @@ def convert_image_page():
     return render_template('convert_image.html')
 
 
+@app.route('/convert/crop')
+def convert_crop_page():
+    """Image crop editor page."""
+    return render_template('convert_crop.html')
+
+
 @app.route('/api/convert/image', methods=['POST'])
 def api_convert_image():
     """API endpoint for image conversion."""

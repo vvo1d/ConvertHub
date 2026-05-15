@@ -159,6 +159,89 @@ a:hover {
     margin: 0 auto;
 }
 
+/* Hero actions */
+.hero__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+/* Formats section */
+.formats-section {
+    text-align: center;
+    padding: 32px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+}
+
+.formats-section__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.formats-badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 28px;
+}
+
+.format-badge {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+.format-sep {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.conversions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.conversion-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.conversion-from,
+.conversion-to {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.conversion-arrow {
+    color: var(--accent);
+    font-weight: 700;
+}
+
 /* Cards grid */
 .cards-grid {
     display: grid;
@@ -890,6 +973,25 @@ a:hover {
 
     .hero__title {
         font-size: 2.2rem;
+    }
+
+    .hero__actions {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 20px;
+    }
+
+    .hero__actions .btn {
+        justify-content: center;
+    }
+
+    .formats-section {
+        padding: 24px 0 28px;
+        margin-bottom: 28px;
+    }
+
+    .conversions-grid {
+        gap: 8px;
     }
 
     .cards-grid {
